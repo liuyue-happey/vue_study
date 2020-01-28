@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <index></index>
+    </div>
+    <script>
+        Vue.component('index',{
+            template:`
+                <div>我是一个父组件
+                    <son></son>
+                    <sister></sister
+                </div>
+            `,
+            // 子组件  通过components的方法创建  他是一个对象    里面是定义的所有的子组件 属性名就是组建的名称  也就是标签名 子组建的用法  和父组件的用法完全一样 indexA 写成 index-a 
+            components:{
+                son:{
+                    template:`
+                        <div>我是一个子组件</div>
+                    `,
+                },
+                // 定义多个子组件 这两个组件的关系是 兄弟组件 是平级的  他们都有一个父组件
+                sister:{
+                    template:`
+                        <div>我是兄弟组件</div>
+                    `
+                }
+            }
+        })
+        let vm  = new Vue({
+            el:'#app',
+            data:{}
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <index></index>
+    </div>
+    <script>
+        Vue.component('index', {
+            template: `
+                <div>我是一个父组件
+                    <son :sendData='data'></son>
+                </div>
+            `,
+            data() {
+                return {
+                    data:'小兰',
+                }
+            },
+            // 子组件  通过components的方法创建  他是一个对象    里面是定义的所有的子组件 属性名就是组建的名称  也就是标签名 子组建的用法  和父组件的用法完全一样 indexA 写成 index-a 
+
+            //   父组件向子组件传参
+            //   父组件怎么传参  通过在子组件上自定义属性 传递参数
+            //   子组件怎么接受   通过props  属性来接受参数 
+            // props:  子组件的props属性  他是一个数组   可以访问到父组件中定义的属性的值 可以当作子组件的一个属性进行使用
+            components: {
+                son: {
+                    template: `
+                        <div>我是一个子组件 我爸爸给我的名字叫做{{sendData}}</div>
+                    `,
+                    props:['sendData'],
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+</body>
+
+</html>

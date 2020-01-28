@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/vue2.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>过滤器的使用</h1>
+        <p v-for='item in timeList'>{{item | filterDate('-','=')}}</p>
+        <p>2020-1-26</p>
+    </div>
+    <script>
+        // Vue.filter  vue过滤器  他有两个参数;第一个参数是过滤器的名称, 第二个参数是一个函数;可以说匿名函数; 这个函数的第一个参数 默认是管道符左边的数据 也就是 需要过滤的数据;第二个参数是过滤器使用的第一个参数;
+        // 过滤器的使用:
+        //  在需要操作数据的后面加一个管道符 |   后面跟上过滤器的名称 可以添加参数('params1')
+        Vue.filter('filterDate', filterDate);
+        function filterDate(val, icon) {
+            let n = val.getFullYear();
+            let m = val.getMonth() + 1;
+            let d = val.getDate();
+            return n + icon + m + icon + d;
+        }
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                timeList: [
+                    new Date(),
+                    new Date(),
+                    new Date(),
+                    new Date()
+                ]
+            },
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <template id="componentD">
+        <div>
+            我是组件d
+        </div>
+    </template>
+
+    <script type="x/component" id="componentE">
+        <div>
+            我是组件e
+        </div>
+    </script>
+
+    <div id="app">
+        <index-a></index-a>
+        <index-b></index-b>
+        <index-c></index-c>
+        <index-d></index-d>
+        <index-e></index-e>
+        <index-h></index-h>
+    </div>
+    <script>
+        // 组件的创建 
+        // 注意:
+        // 1 如果是是使用驼峰命名法定义的组件的名字   需要用 - 进行连接  比如 indexA  需要写成 index-a
+        // 2 组件只能包含一个根元素
+        // Vue.extend方法返回一个 组建的构造器  他有一个参数 这个参数一个对象,里面是一些配置项
+        let index = Vue.extend({
+            template: `
+                <div>
+                    我是组件a
+                </div>
+            `
+        });
+
+        // Vue.component 他会根据Vue.extend返回的构造器 创建一个组建的实例  他有两个参数  第一个是组建的名字  第二个是构造器    组建的使用和普通的标签  使用完全一样  div p strong
+        Vue.component('indexA', index);
+
+
+
+        Vue.component('indexB', {
+            template: '<div>我是组件b</div>'
+        })
+
+        Vue.component('indexC', Vue.extend({
+            template: `
+                <div>
+                    我是组件c
+                </div>
+            `
+        }))
+        // 第二个参数 template:'id名' 利用template标签创建组件实例 
+        Vue.component('indexD', {
+            template: '#componentD'
+        })
+
+        // 利用script 标签的type="x/template" 方法
+        Vue.component('indexE', {
+            template: '#componentE'
+        })
+
+
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {}
+            }
+        })
+    </script>
+</body>
+
+</html>

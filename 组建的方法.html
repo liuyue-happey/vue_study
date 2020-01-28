@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <index></index>
+    </div>
+    <script>
+        Vue.component('index', {
+            template: `
+                <div>
+                    我是一个div {{msg}}
+                    <p @click='clickMe'>我是一个p元素</p>
+                </div>
+            `,
+            // 这个data必须是一个方法  这个方法必须return一个对象
+            data() {
+                return {
+                    msg: '我是一个子组件'
+                }
+            },
+            // 除了data也有区别之外  其他的钩子函数 用法基本一致
+            methods:{
+                clickMe(){
+                    console.log('你点击我了')
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+</body>
+
+</html>

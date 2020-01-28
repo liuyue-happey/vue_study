@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <index></index>
+    </div>
+    <script>
+        Vue.component('index', {
+            template: `
+                <div>我是一个父组件
+                    <son @getMsg="giveData"></son>
+                    子组件传递过来的参数  {{msg}}
+                </div>
+            `,
+            data() {
+                return {
+                    msg:'???',
+                }
+            },
+            methods:{
+                giveData(data){
+                    console.log(data);
+                    this.msg = data;
+                }
+            },
+            // 子组件向父组件传参 
+            // 子组件怎么传   通过this.$emit 方法向父组件发射一个事件  这个方法他有两个参数 第一个是触发父组件事件的名称,第二个是传递的参数的值
+            // 父组件怎么接收
+            components: {
+                son: {
+                    template: `
+                        <div>我是一个子组件 
+                            <br>
+                            <button @click="clickMe">向父组件传参</button>
+                         </div>
+                    `,
+                    data(){
+                        return{
+                            msg:'早安',
+                        }
+                    },
+                    methods:{
+                        clickMe(){
+                            this.$emit('getMsg',this.msg)
+                        }
+                    }
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <link rel="stylesheet" href="./css/common.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="studyVue" id="app">
+        <table border="solid 1px gray" style="width: 100%;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in dataList">
+                    <td>{{item.name}}</td>
+                    <td>{{item.age}}</td>
+                    <td>{{item.sex}}</td>
+                    <td>{{item.date | filterDate('-')}}</td>
+                    <td class="delBtn" @click="delItem(index)">删除</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    Vue.filter('filterDate', function (data, icon) {
+        let y = data.getFullYear();
+        let m = data.getMonth() + 1;
+        let d = data.getDate();
+        return y + icon + m + icon + d;
+    })
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                dataList: [
+                    { name: 'zs', age: 18, sex: '男', date: new Date() },
+                    { name: 'ls', age: 18, sex: '男', date: new Date() },
+                    { name: 'ww', age: 18, sex: '男', date: new Date() },
+                    { name: 'zl', age: 18, sex: '男', date: new Date() },
+                    { name: 'aa', age: 18, sex: '男', date: new Date() },
+                    { name: 'bb', age: 18, sex: '男', date: new Date() }
+                ]
+            }
+        },
+        methods: {
+            delItem(index) {
+                console.log(index);
+                this.dataList.splice(index, 1);
+            }
+        }
+    })
+</script>
+
+</html>

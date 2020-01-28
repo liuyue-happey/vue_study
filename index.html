@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/common.css">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+    <style>
+        [v-clock] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-clock>
+        <!-- 
+            {{}}
+            v-text    显示data中的数据  渲染成对应的字段  并不能识别html标签
+            v-html    用法和v-text基本一致    可以识别html标签
+            v-model    双向数据绑定    
+            v-if     控制元素的显示和隐藏   如果为true就显示  false就不显示  控制dom元素  
+            v-show    控制元素的显示和隐藏      控制css  display:none 
+            v-for   循环的 
+            v-clock 包装元素   页面初始化没有完成的时候 不显示这个元素   初始化结束的时候在显示这个元素
+            @   注册时间 在methods 是一个对象   里面定义需要执行的函数
+         -->
+        <div v-if="isShow">v-if</div>
+        <div v-if="isShow">v-show</div>
+        <br>
+        <input type="text" v-model="msg">
+        <p v-text="msg"></p>
+        <p v-html="msg"></p>
+        <h3 v-for="(val,index) in dataList">
+            {{val.name}} {{index}}
+        </h3>
+        <div @click="clickMe"
+            style="width: 100px;height:30px;background-color: red; line-height: 30px;border-radius: 3px; text-align:center;">
+            点我
+        </div>
+        <h3>computed</h3>
+        <input type="text" v-model="name1">
+        <input type="text" v-model="name2">
+        <p>{{fullName}}</p>
+        <h3>watch 数据监听</h3>
+        <input type="text" v-model="watchName">
+        <p>watch 模仿 计算属性</p>
+        <span>{{watchFullName}}</span>
+        <h3>深度监听</h3>
+        <input type="text" v-model="userName.name1">
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                watchName: '',
+                msg: '这是一个字段',
+                watchFullName: '',
+                switch: 2,
+                name1: '',
+                name2: '',
+                dataList: [
+                    { name: 'zs', date: new Date(), ID: '1231' },
+                    { name: 'ls', date: new Date(), ID: '1231' },
+                    { name: 'ww', date: new Date(), ID: '1231' },
+                    { name: 'zl', date: new Date(), ID: '1231' }
+                ],
+                userName: {
+                    name1: 'zs',
+                    name: 'ls'
+                }
+            },
+            methods: {
+                clickMe(e) {
+                    console.log(e);
+                },
+                v_model(e) {
+                    console.log(e.target.value)
+                }
+
+            },
+            // computed   计算属性  通过计算得到 另一只变量  当然也可以执行其他的操作
+            computed: {
+                fullName() {
+                    return this.name1 + this.name2
+                }
+            },
+            //  watch 数据监听   他是一个对象 里面是需要监听数据   对象名是data中的变量名 也就是需要监听的变量; 他有两个参数 一个是newval 和oldval  第一个参数表示新值 第二个参数代表旧值   这两个参数是形参  可以自定义
+            watch: {
+                watchName(newval, oldval) {
+                    console.log('今天刘月不听话');
+                    console.log(newval);
+                    console.log(oldval);
+                },
+                name1(a, b) {
+                    this.watchFullName = a + this.name2;
+                },
+                name2(a, b) {
+                    this.watchFullName = this.name1 + a;
+                },
+                // 深度监听  
+                userName: {
+                    handler(a, b) {
+                        console.log(a)
+                    },
+                    deep: true,
+                }
+            }
+        })
+        // 路由  组件  vue 脚手架   webpack
+    </script>
+</body>
+
+</html>

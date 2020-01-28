@@ -1,0 +1,25 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing:border-box;
+    user-select: none;
+}
+.studyVue{
+    width: 500px;
+    height: auto;
+    border: solid 1px  #ccc;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px 3px  rgba(0, 0, 0, .1);
+    padding: 10px;
+}
+tr{
+    text-align: center;
+    height: 25px;
+    line-height: 25px;
+}
+.delBtn{
+    color: red;
+    cursor: pointer;
+}

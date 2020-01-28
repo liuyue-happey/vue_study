@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{msg}}
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app', 
+            data: {
+                msg: '我是一个data'
+            },
+            methods:{
+
+            },
+            beforeCreate() {
+                console.log(document.getElementById('app'));
+                console.log('$el',this.$el);
+                console.log('msg',this.msg);
+                console.log('=======================beforeCreate========================')
+            },
+            created() {
+                console.log(document.getElementById('app'));
+                console.log('$el',this.$el);
+                console.log('msg',this.msg);
+                console.log('=============================created=======================')
+            },
+            beforeMount() {
+                console.log(document.getElementById('app'));
+                console.log('$el',this.$el);
+                console.log('msg',this.msg);
+                console.log('==================================beforeMount===========================')
+            },
+            mounted() {
+                console.log(document.getElementById('app'));
+                console.log('$el',this.$el);
+                console.log('msg',this.msg);
+                console.log('===========================mounted============================')
+            },
+        })
+    </script>
+</body>
+
+</html>

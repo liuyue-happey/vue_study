@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <index></index>
+    </div>
+    <script>
+        let eventBus = new Vue();
+        Vue.component('index', {
+            template: `
+                <div>
+                    <son></son>
+                    <sister></sister>
+                </div>
+            `,
+            // 子组件  通过components的方法创建  他是一个对象    里面是定义的所有的子组件 属性名就是组建的名称  也就是标签名 子组建的用法  和父组件的用法完全一样 indexA 写成 index-a 
+
+
+            // 兄弟组件的传参
+            // 通过事件总线 => 就是 定义一个新的Vue实例  开启一个监听 组件之间的通信
+            // son怎么接收  通过事件总线的$on方法;  在mounted钩子中 开启一个事件总线的监听器  一旦兄弟组件触发这个事件 就会被立即监听到.并且触发第二个参数  第二个参数是一个函数 
+            // sister怎么传递   => 通过new 出来的空的Vue实例 也就是事件总线的$emit方法 向事件总线发射一个事件 和携带需要传递的 参数
+            components: {
+                son: {
+                    template: `
+                        <div>我是一个子组件 
+                            <input type="text" v-model="msg" >
+                        </div>
+                    `,
+                    data() {
+                        return {
+                            msg: 'aa'
+                        }
+                    },
+                    mounted() {
+                        eventBus.$on('getMsg', function (data) {
+                            console.log(data);
+                        })
+                    }
+                },
+                // 定义多个子组件 这两个组件的关系是 兄弟组件 是平级的  他们都有一个父组件
+                sister: {
+                    template: `
+                        <div @click="sendSonComponentMsg">  我是兄弟组件</div>
+                    `,
+                    data() {
+                        return {
+                            msg: '我的名字叫sister'
+                        }
+                    },
+                    methods: {
+                        sendSonComponentMsg() {
+                            eventBus.$emit('getMsg', this.msg)
+                        }
+                    }
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+</body>
+
+</html>
