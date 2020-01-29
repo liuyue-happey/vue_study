@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <!-- 1 引入路由文件 -->
+    <script src="./js/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 路由跳转  通过router-link 标签进行路由跳转 他有一个to属性  to属性的值对应路由规则中的path属性的值  router-link在页面中 最终会被渲染成a标签  to属性会变成a标签的href属性 在前面加上#  锚点定位 -->
+        <!--路由参数   在html标签中  通过 /参数值    给路由添加参数  -->
+        <!-- <router-link to="/index/11">去index路由</router-link>  -->
+        <router-link to="/tabs/22">去tabs路由22</router-link>
+        <router-link to="/tabs/33">去tabs路由33</router-link>
+        <router-link to="/tabs/44">去tabs路由44</router-link>
+        <router-link to="/tabs/55">去tabs路由55</router-link>
+        <br>
+        <!-- 6  路由显示   通过 router-view 标签显示 路径匹配到的路由  router-view 好比是一个容易 会将匹配到的路由  显示到 router-view 标签中-->
+        <router-view></router-view>
+    </div>
+    <script>
+        // 2 配置路由所需要的组件
+        let index = Vue.component('index',{
+            template:'<div>我是index路由</div>'
+        })
+        let tabs = Vue.component('tabs',{
+            // 通过 $route.params.参数名
+            template:'<div>我是tabs路由 我的路由参数是{{paramsId}}</div>',
+            data(){
+                return{
+                    paramsId:''
+                }
+            },
+            mounted(){
+                // 在js中 可以通过this.$route.params.参数名  获取参数
+                // this.$route  代表的 是一些关于路由的信息  比如参数params
+                // this.route
+                // this 指向的是当前的组件 它包含的是当前组件的信息  this.$route 里面是当前路由的信息
+                // this.$route.params  包含的是当前路由参数 的一些信息 
+                this.paramsId = this.$route.params.id
+            },
+            watch:{
+                '$route'(to,form){
+                    this.paramsId = to.params.id;
+                }
+            }
+        })
+        let left = Vue.component('left',{
+            template:'<div>我是left路由</div>'
+        })
+        // 3 创建路由对象  在路由对象中配置路由规则 
+        let router = new VueRouter({
+            // 4 通过 routes  配置路由规则 他是一个数组  数组里面是一个个对象 每一个对象对用一个规则 每条规则都包含 name(路由的名字)属性 path(路径)属性 component(路径所对应的组件)属性
+            routes:[
+                
+                // 在路由规则中  通过 /:参数名  添加参数
+                {name:'index',path:'/index/:id',component:index},
+                {name:'tabs',path:'/tabs/:id',component:tabs},
+                {name:'left',path:'/left/:id',component:left},
+            ]
+        });
+        let vm = new Vue({
+            el:'#app',
+            // 在Vue实例中注入路由   这样整个Vue实例都拥有路由了;
+            // router:router,
+            router,
+            data:{}
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue2.js"></script>
+    <title>Document</title>
+    <style>
+        li {
+            list-style: none;
+            display: inline-block;
+            user-select: none;
+            width: 70px;
+        }
+
+        * {
+            padding: 0%;
+            margin: 0%;
+        }
+
+        .contentUl li {
+            display: none;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        .tabsUl {
+            border-bottom: solid 1px gray;
+            line-height: 35px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .tabsUl li:hover {
+            color: blue;
+        }
+
+        .clickcontent {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <tabs></tabs>
+        <!-- component  用来渲染已有的组件   它的is属性的值等于谁 就显示那个组件-->
+        <component :is="index"></component>
+    </div>
+    <script>
+        Vue.component('index0', {
+            template: '<div>我是组件1</div>'
+        })
+        Vue.component('index1', {
+            template: '<div>我是组件2</div>'
+        })
+        Vue.component('index2', {
+            template: '<div>我是组件3</div>'
+        })
+        Vue.component('tabs', {
+            template: `
+                <ul class="tabsUl">
+                    <!--@click="clickMe('index0')"   事件添加参数 直接在后面跟上小括号添加参数 小括号里面的参数添加引号 就代表是一个字符串  如果不加引号 就代表是一个变量  -->
+                    <li class="clickLi" @click="clickMe('index0')">标签1</li>
+                    <li @click="clickMe('index1')">标签2</li>
+                    <li @click="clickMe('index2')">标签3</li>
+                </ul>
+                `,
+            methods: {
+                clickMe(component) {
+                    // 通过获取到的参数  来改变  component中is 属性的值
+                    vm.index =component;
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                index: 'index0'
+            },
+        })
+    </script>
+</body>
+
+</html>

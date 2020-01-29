@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li {
+            list-style: none;
+            display: inline-block;
+            user-select: none;
+            width: 70px;
+        }
+
+        * {
+            padding: 0%;
+            margin: 0%;
+        }
+
+        .contentUl li {
+            display: none;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        .tabsUl {
+            border-bottom: solid 1px gray;
+            line-height: 35px;
+            cursor: pointer;
+        }
+
+        .tabsUl li:hover {
+            color: blue;
+        }
+
+        .clickLi {
+            color: blue;
+            border-bottom: solid 1px blue;
+        }
+
+        .clickcontent {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="tabsUl" id="tabsUl">
+        <li class="clickLi">标签1</li>
+        <li>标签2</li>
+        <li>标签3</li>
+    </ul>
+
+    <ul class="contentUl" id="contentUl">
+        <li class="clickcontent">内容1</li>
+        <li>内容2</li>
+        <li>内容3</li>
+    </ul>
+    <script>
+        let tabsUl = document.getElementById('tabsUl');
+        let contentUl = document.getElementById('contentUl');
+        tabsUl.onclick = function (e) {
+            // for循环对所有的li标签进行操作
+            for (let i = 0; i < tabsUl.children.length; i++) {
+                // 取消所有tabs标签的蓝色效果
+                tabsUl.children[i].className = '';
+                // 让所有的内容li标签 隐藏掉
+                contentUl.children[i].className = '';
+                // 给所有的tabs  li标签添加一个自定义属性index  然后可以通过index的自定义属性 获取点击的是第几个li标签
+                tabsUl.children[i].setAttribute('index', i);
+            };
+            // e.target : 获取真正触发事件的元素
+            e.target.className = 'clickLi';
+            // 获取点击的那个li标签
+            let index = e.target.getAttribute('index');
+            // 通过获取到的索引 给内容部分的li标签显示出来
+            contentUl.children[index].className = 'clickcontent';
+        }
+    </script>
+</body>
+
+</html>
