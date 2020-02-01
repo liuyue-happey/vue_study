@@ -32,8 +32,8 @@
         let left = Vue.component('left', {
             template: '<div>我是left路由 <button @click="lookChildren">查看子路由</button> <router-view></router-view></div>',
             methods: {
-                lookChildren() {
-                    this.$router.push({ path: '/left/index' });
+                lookChildren() {    
+                    this.$router.push({ name: 'indexChildren' });
                 }
             }
         })
@@ -47,7 +47,7 @@
                     name: 'left', path: '/left', component: left,
                     // 嵌套路由=>子路由  children 他是一个数组  数组里面是一个个对象 每一个对象对用一个规则 每条规则都包含 name(路由的名字)属性 path(路径 不能带/)属性 component(路径所对应的组件)属性
                     children: [
-                        {name: 'index', path: 'index', component: index,}
+                        {name: 'indexChildren', path: 'indexChildren', component: index,}
                     ]
                 },
             ]
